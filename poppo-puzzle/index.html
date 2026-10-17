@@ -267,17 +267,17 @@
 //   friction: 摩擦 / restitution: 反発 / color: 仮の色 / note: 合体したときの音
 //   score: その段階ができたときの点数 / image: 絵があるときの名前（IMAGES のキー）
 const STAGES = [
-  { stage: 1,  name: 'カスタネット',   label: 'カスタ\nネット',  radius: 16, friction: 0.05, restitution: 0.25, color: '#ff9a8b', note: 'C4', score: 1 },
-  { stage: 2,  name: 'すず',           label: 'すず',            radius: 21, friction: 0.05, restitution: 0.25, color: '#ffc46b', note: 'D4', score: 3 },
-  { stage: 3,  name: 'トライアングル', label: 'トライ\nアングル', radius: 26, friction: 0.08, restitution: 0.22, color: '#ffe46b', note: 'E4', score: 6 },
-  { stage: 4,  name: 'ハーモニカ',     label: 'ハーモ\nニカ',    radius: 32, friction: 0.08, restitution: 0.20, color: '#c6e47e', note: 'G4', score: 10 },
-  { stage: 5,  name: 'リコーダー',     label: 'リコー\nダー',    radius: 38, friction: 0.10, restitution: 0.18, color: '#86dfe6', note: 'A4', score: 15 },
-  { stage: 6,  name: 'タンバリン',     label: 'タンバ\nリン',    radius: 45, friction: 0.10, restitution: 0.16, color: '#9cc8f5', note: 'C5', score: 21 },
-  { stage: 7,  name: 'バイオリン',     label: 'バイオ\nリン',    radius: 52, friction: 0.12, restitution: 0.14, color: '#bba4e3', note: 'D5', score: 28 },
-  { stage: 8,  name: 'ギター',         label: 'ギター',          radius: 60, friction: 0.12, restitution: 0.12, color: '#f5a3c4', note: 'E5', score: 36 },
-  { stage: 9,  name: 'たいこ',         label: 'たいこ',          radius: 68, friction: 0.14, restitution: 0.10, color: '#ffb59a', note: 'G5', score: 45 },
-  { stage: 10, name: 'ピアノ',         label: 'ピアノ',          radius: 77, friction: 0.14, restitution: 0.08, color: '#c3ccd2', note: 'A5', score: 55 },
-  { stage: 11, name: 'ぽっぽちゃん',   label: 'ぽっぽ\nちゃん',  radius: 86, friction: 0.16, restitution: 0.08, color: '#3da542', note: 'C6', score: 100, image: 'poppo' },
+  { stage: 1,  name: 'カスタネット',   label: 'カスタ\nネット',  radius: 16, friction: 0.35, restitution: 0.62, color: '#ff9a8b', note: 'C4', score: 1 },
+  { stage: 2,  name: 'すず',           label: 'すず',            radius: 21, friction: 0.38, restitution: 0.60, color: '#ffc46b', note: 'D4', score: 3 },
+  { stage: 3,  name: 'トライアングル', label: 'トライ\nアングル', radius: 26, friction: 0.42, restitution: 0.58, color: '#ffe46b', note: 'E4', score: 6 },
+  { stage: 4,  name: 'ハーモニカ',     label: 'ハーモ\nニカ',    radius: 32, friction: 0.45, restitution: 0.55, color: '#c6e47e', note: 'G4', score: 10 },
+  { stage: 5,  name: 'リコーダー',     label: 'リコー\nダー',    radius: 38, friction: 0.50, restitution: 0.52, color: '#86dfe6', note: 'A4', score: 15 },
+  { stage: 6,  name: 'タンバリン',     label: 'タンバ\nリン',    radius: 45, friction: 0.55, restitution: 0.50, color: '#9cc8f5', note: 'C5', score: 21 },
+  { stage: 7,  name: 'バイオリン',     label: 'バイオ\nリン',    radius: 52, friction: 0.58, restitution: 0.47, color: '#bba4e3', note: 'D5', score: 28 },
+  { stage: 8,  name: 'ギター',         label: 'ギター',          radius: 60, friction: 0.62, restitution: 0.45, color: '#f5a3c4', note: 'E5', score: 36 },
+  { stage: 9,  name: 'たいこ',         label: 'たいこ',          radius: 68, friction: 0.66, restitution: 0.42, color: '#ffb59a', note: 'G5', score: 45 },
+  { stage: 10, name: 'ピアノ',         label: 'ピアノ',          radius: 77, friction: 0.70, restitution: 0.40, color: '#c3ccd2', note: 'A5', score: 55 },
+  { stage: 11, name: 'ぽっぽちゃん',   label: 'ぽっぽ\nちゃん',  radius: 86, friction: 0.75, restitution: 0.38, color: '#3da542', note: 'C6', score: 100, image: 'poppo' },
 ];
 
 // 音の高さ（ドレミソラの5音を順にくり返す）
@@ -296,6 +296,19 @@ const NOTES = {
 const DIFFICULTY = {
   easy:   { label: 'やさしい', dropMaxStage: 3, overLimitMs: 4000, gravity: 0.8 },
   normal: { label: 'ふつう',   dropMaxStage: 5, overLimitMs: 2000, gravity: 1.0 },
+};
+
+// 動きの大げささ（0 にするとその演出はなし）
+const FX = {
+  mergeReach: 6,         // 同じ楽器が この距離（px）まで近づいたら、さわっていなくても合体
+  mergeBlast: 1.5,       // 合体したとき、まわりの楽器をはじき飛ばす強さ
+  mergeBlastRange: 1.8,  // はじく範囲（できた楽器の半径の何倍か）
+  mergePopUp: 3,         // 合体してできた楽器が上にはねる速さ
+  frictionStatic: 0.9,   // 止まっているときの摩擦（大きいほど ぴたっと止まる）
+  frictionAir: 0.004,    // 空気のてい抗（小さいほど 勢いが続く）
+  squash: 0.3,           // ぶつかったとき、ぐにゃっとつぶれて見える量（見た目だけ）
+  shake: 7,              // 大きくぶつかった・合体したときの 画面のゆれ（px）
+  bumpSound: true,       // ぶつかったときの ぽこっという音
 };
 
 // 盤面の大きさ（画面に合わせて拡大縮小されます）
@@ -395,6 +408,15 @@ const Sound = {
     this.tone(n.hz * 2, { dur: 0.3, type: 'sine', vol: 0.08 });
   },
   drop() { this.tone(196, { dur: 0.12, type: 'sine', vol: 0.15 }); },
+  lastBump: 0,
+  bump(speed, radius) {
+    if (!FX.bumpSound || !this.ready()) return;
+    const now = this.ctx.currentTime;
+    if (now - this.lastBump < 0.06) return;
+    this.lastBump = now;
+    // 大きい楽器ほど低い音
+    this.tone(260 - radius * 1.8, { dur: 0.09, type: 'sine', vol: Math.min(0.2, speed / 50) });
+  },
   clear() {
     STAGES.forEach((s, i) => {
       const n = NOTES[s.note];
@@ -458,14 +480,17 @@ function createPiece(i, x, y) {
   const s = STAGES[i];
   const b = Bodies.circle(x, y, s.radius, {
     friction: s.friction,
-    frictionStatic: 0.4,
+    frictionStatic: FX.frictionStatic,
     restitution: s.restitution,
-    frictionAir: 0.008,
+    frictionAir: FX.frictionAir,
   });
   b.stageIndex = i;
   b.bornAt = simTime;
   b.popAt = performance.now();
   b.merged = false;
+  b.squashAt = -1e9;
+  b.squashAmt = 0;
+  b.squashAng = 0;
   return b;
 }
 
@@ -484,6 +509,7 @@ function newGame() {
     }
   };
   Events.on(engine, 'collisionStart', queuePairs);
+  Events.on(engine, 'collisionStart', onImpact);
   Events.on(engine, 'collisionActive', queuePairs);
 
   score = 0;
@@ -520,6 +546,71 @@ function drop() {
   drawNext();
 }
 
+// ぶつかった勢いに合わせて、つぶれる・ゆれる・音が鳴る
+function onImpact(e) {
+  for (const p of e.pairs) {
+    const a = p.bodyA, b = p.bodyB, n = p.collision.normal;
+    const speed = Math.abs((a.velocity.x - b.velocity.x) * n.x + (a.velocity.y - b.velocity.y) * n.y);
+    if (speed < 1.5) continue;
+    const ang = Math.atan2(n.y, n.x);
+    const amt = Math.min(1, speed / 10) * FX.squash;
+    for (const body of [a, b]) if (body.stageIndex !== undefined) squash(body, amt, ang);
+    const big = Math.max(a.circleRadius || 0, b.circleRadius || 0);
+    if (speed > 7 && big >= 45) shake(FX.shake * Math.min(1, speed / 14));
+    Sound.bump(speed, big);
+  }
+}
+
+function squash(body, amt, ang) {
+  body.squashAt = performance.now();
+  body.squashAmt = Math.max(amt, body.squashAmt * 0.5);
+  body.squashAng = ang;
+}
+
+let shakeAt = -1e9, shakeAmp = 0;
+function shake(amp) {
+  if (!amp) return;
+  const left = shakeAmp * Math.exp(-(performance.now() - shakeAt) / 120);
+  shakeAmp = Math.max(amp, left);
+  shakeAt = performance.now();
+}
+
+// 少しはなれていても同じ楽器なら合体させる
+function queueNearby() {
+  if (!FX.mergeReach) return;
+  const list = [...pieces];
+  for (let i = 0; i < list.length; i++) {
+    const a = list[i];
+    for (let j = i + 1; j < list.length; j++) {
+      const b = list[j];
+      if (a.stageIndex !== b.stageIndex) continue;
+      const d = Math.hypot(a.position.x - b.position.x, a.position.y - b.position.y);
+      if (d < a.circleRadius + b.circleRadius + FX.mergeReach) mergeQueue.push([a, b]);
+    }
+  }
+}
+
+// 合体したところから まわりをはじき飛ばす
+function blast(x, y, ni, born) {
+  if (!FX.mergeBlast) return;
+  const range = STAGES[ni].radius * FX.mergeBlastRange;
+  for (const o of pieces) {
+    if (o === born) continue;
+    const dx = o.position.x - x, dy = o.position.y - y;
+    const d = Math.hypot(dx, dy);
+    const reach = range + o.circleRadius;
+    if (d >= reach || d < 0.01) continue;
+    // 近いほど・小さいほど よく飛ぶ
+    const light = Math.max(0.6, Math.min(1.6, 40 / o.circleRadius));
+    const f = FX.mergeBlast * (1 - d / reach) * (2 + ni * 0.4) * light;
+    Body.setVelocity(o, {
+      x: o.velocity.x + (dx / d) * f,
+      y: o.velocity.y + (dy / d) * f - f * 0.3,
+    });
+    squash(o, Math.min(1, f / 6) * FX.squash, Math.atan2(dy, dx));
+  }
+}
+
 function processMerges() {
   if (!mergeQueue.length) return;
   const queue = mergeQueue;
@@ -541,10 +632,13 @@ function processMerges() {
       nb.bornAt = simTime - FIELD.graceMs; // 合体でできたものは猶予なし
       Body.setVelocity(nb, {
         x: (a.velocity.x + b.velocity.x) / 4,
-        y: (a.velocity.y + b.velocity.y) / 4,
+        y: (a.velocity.y + b.velocity.y) / 4 - FX.mergePopUp,
       });
       Composite.add(engine.world, nb);
       pieces.add(nb);
+      blast(x, y, ni, nb);
+      squash(nb, FX.squash, -Math.PI / 2);
+      if (ni >= 5) shake(FX.shake * (ni / LAST));
       score += STAGES[ni].score;
       reached = Math.max(reached, ni);
       Sound.merge(ni);
@@ -558,6 +652,8 @@ function processMerges() {
     } else {
       // ぽっぽちゃんどうし：ふたりとも飛んでいって大きなボーナス
       score += STAGES[LAST].score * 2;
+      blast(x, y, LAST, null);
+      shake(FX.shake * 1.5);
       Sound.clear();
       addMergeEffect(x, y, LAST, true);
     }
@@ -674,12 +770,18 @@ function resize() {
 window.addEventListener('resize', resize);
 if (window.ResizeObserver) new ResizeObserver(resize).observe($('stage'));
 
-function drawPiece(c, i, x, y, alpha = 1, k = 1) {
+function drawPiece(c, i, x, y, alpha = 1, k = 1, sq = 0, sqAng = 0) {
   const s = STAGES[i];
   const r = s.radius * k;
   c.save();
   c.globalAlpha = alpha;
   c.translate(x, y);
+  if (sq) {
+    // ぶつかった向きにつぶして、横にふくらませる
+    c.rotate(sqAng);
+    c.scale(1 - sq, 1 + sq * 0.7);
+    c.rotate(-sqAng);
+  }
   const im = s.image && imgs[s.image];
   c.beginPath();
   c.arc(0, 0, r, 0, Math.PI * 2);
@@ -736,6 +838,9 @@ function draw() {
   const { width: W, height: H, wall, topLine } = FIELD;
   const now = performance.now();
   ctx.clearRect(0, 0, W, H);
+  ctx.save();
+  const sAmp = shakeAmp * Math.exp(-(now - shakeAt) / 120);
+  if (sAmp > 0.3) ctx.translate((Math.random() - 0.5) * 2 * sAmp, (Math.random() - 0.5) * 2 * sAmp);
 
   // 楽譜のような背景
   ctx.fillStyle = '#fffdf5';
@@ -789,7 +894,11 @@ function draw() {
     for (const b of pieces) {
       const age = now - b.popAt;
       const k = age < 160 ? 0.7 + 0.3 * (age / 160) : 1;
-      drawPiece(ctx, b.stageIndex, b.position.x, b.position.y, 1, k);
+      // つぶれたあと、ぷるぷるともどる
+      const st = now - b.squashAt;
+      const sq = st < 600 ? b.squashAmt * Math.exp(-st / 150) * Math.cos(st / 45) : 0;
+      if (st >= 600) b.squashAmt = 0;
+      drawPiece(ctx, b.stageIndex, b.position.x, b.position.y, 1, k, sq, b.squashAng);
     }
   }
 
@@ -813,6 +922,7 @@ function draw() {
     }
     ctx.restore();
   }
+  ctx.restore();
 }
 
 /* ---------- ループ ---------- */
@@ -826,6 +936,7 @@ function frame(t) {
     while (acc >= STEP && state === 'playing') {
       Engine.update(engine, STEP);
       simTime += STEP;
+      queueNearby();
       processMerges();
       acc -= STEP;
     }
